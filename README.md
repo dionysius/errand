@@ -18,6 +18,8 @@ errand is the right library for you, if you just want a slice of actual errors f
 - if any error is already an errand, only the entries are taken - exactly one level of error slice is returned, you are flexible in how you organize your code and where you return parts of your error slice
 - no external dependencies - it doesn't add weight
 
+errand is **not a replacement for wrapping**. I encourage you to use [golangs wrapping functionality](https://blog.golang.org/go1.13-errors)! As of now, you can't find out the types of these errors.
+
 ## Usage
 
 errand offers only one package exported function: `Append` (besides the error and string interface type implementations `Error` and `String`).
