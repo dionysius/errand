@@ -7,7 +7,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/dionysius/errand)](https://goreportcard.com/report/github.com/dionysius/errand)
 [![GitHub](https://img.shields.io/github/license/dionysius/errand?color=lightgrey)](https://github.com/dionysius/errand/blob/master/COPYING)
 
-errand is your little assistant for error slices or also called multierrors. It helps you append multiple errors together into a single error as minimally as possible. The usage is as native as possible to the original error interface.
+errand is your little assistant for error slices or so-called multierrors. It helps you append multiple errors together into a single error as minimally as possible. The usage is as native as possible to the original error interface.
 
 errand is the right library for you, if you just want a slice of actual errors from a bunch of calls. It gives you the following features:
 
@@ -18,7 +18,7 @@ errand is the right library for you, if you just want a slice of actual errors f
 - if any error is already an errand, only the entries are taken - exactly one level of error slice is returned, you are flexible in how you organize your code and where you return parts of your error slice
 - no external dependencies - it doesn't add weight
 
-errand is **not a replacement for wrapping**. I encourage you to use [golangs wrapping functionality](https://blog.golang.org/go1.13-errors)! As of now, you can't find out the types of these errors.
+errand is **not a replacement for error wrapping**. I encourage you to use [golangs error wrapping functionality](https://blog.golang.org/go1.13-errors)! As of now, you can't find out the types of these errors.
 
 ## Usage
 
@@ -30,9 +30,9 @@ To download errand:
 
 To import errand:
 
-`import "github.com/dionysius/errand`
+`import "github.com/dionysius/errand"`
 
-And use errand like you would with go's append:
+And use errand like you would with golangs `append`:
 
 ```go
 package main
@@ -40,7 +40,7 @@ package main
 import (
   "fmt"
 
-  errand "github.com/dionysius/errand"
+  "github.com/dionysius/errand"
 )
 
 func main() {
@@ -86,6 +86,7 @@ The output of the above example is (test it yourself with `go run internal/readm
 
 - Implement the interfaces for `errors.Is` and `errors.As`. PRs welcome!
 - Not sure yet if I even want to: But we could offer an interface `Errander` to offer implementations `Append(error, []error...)` so they can benefit from the merging of error slices into errand.
+- We could offer an interface to get the slices back with an `Errors() []error`
 
 ## Motivation
 

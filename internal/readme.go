@@ -4,7 +4,7 @@ package main
 import (
 	"fmt"
 
-	errand "github.com/dionysius/errand"
+	"github.com/dionysius/errand"
 )
 
 func main() {
