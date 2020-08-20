@@ -5,16 +5,17 @@ import (
 	"strings"
 )
 
+// Errors is responsible for listing multiple errors.
+type Errors interface {
+	// Errors returns the list of wrapped errors.
+	Errors() []error
+}
+
 // errand offers the error slice.
 type errand []error
 
 // Error implements the error interface.
 func (e errand) Error() string {
-	return e.String()
-}
-
-// String returns all errors comma-separated with a prefix of the amount of errors.
-func (e errand) String() string {
 	// Technically we should never have an errand with length 0 or 1
 	s := make([]string, len(e))
 
@@ -23,6 +24,11 @@ func (e errand) String() string {
 	}
 
 	return fmt.Sprintf("%d errors: %s", len(s), strings.Join(s, ", "))
+}
+
+// Errors returns the slice of errors.
+func (e errand) Errors() []error {
+	return e
 }
 
 // Append errs to err. Any nil error is ignored. If only one error is left, that error is exactly returned. If none are left, err is returned (so it keeps the type). If any of the err or errs is an errand, only their entries are taken and the provided order is kept.

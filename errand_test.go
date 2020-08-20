@@ -8,8 +8,14 @@ import (
 	"testing"
 )
 
+// Guarantee errand implements Errors and error.
+var (
+	_ Errors = new(errand)
+	_ error  = new(errand)
+)
+
 // The tests below for Append make sure there is never an errand with less than 2 entries.
-func Test_errand_String_Multi(t *testing.T) {
+func Test_errand_Error_Multi(t *testing.T) {
 	t.Parallel()
 
 	err := fmt.Errorf("one")
@@ -18,6 +24,31 @@ func Test_errand_String_Multi(t *testing.T) {
 
 	if fmt.Sprintf("%s", err3) != "2 errors: one, two" {
 		t.Fail()
+	}
+}
+
+func Test_errand_Errors(t *testing.T) {
+	t.Parallel()
+
+	errs := []error{
+		fmt.Errorf("one"),
+		fmt.Errorf("two"),
+	}
+
+	erra := Append(nil, errs[0])
+	erra = Append(erra, errs[1])
+
+	errand, is := erra.(Errors)
+	if !is {
+		t.Fail()
+	}
+
+	errb := errand.Errors()
+
+	for i := range errs {
+		if errs[i] != errb[i] {
+			t.Fail()
+		}
 	}
 }
 

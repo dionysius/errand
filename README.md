@@ -58,6 +58,13 @@ func main() {
 
   // Output the error
   fmt.Printf("%s\n", errs)
+
+  // Or we can also get the error slice using the Errors interface
+  if multi, is := errs.(errand.Errors); is {
+    for _, err := range multi.Errors() {
+      fmt.Println("->", err.Error())
+    }
+  }
 }
 
 func separate() error {
@@ -80,13 +87,16 @@ The output of the above example is (test it yourself with `go run internal/readm
 
 ```txt
 4 errors: a function with possibly an error, directly add a possible error, you can directly use errand without initialisation of the first error, and force that this function returns an errand since two errors were added
+-> a function with possibly an error
+-> directly add a possible error
+-> you can directly use errand without initialisation of the first error
+-> and force that this function returns an errand since two errors were added
 ```
 
 ## Todos
 
 - Implement the interfaces for `errors.Is` and `errors.As`. PRs welcome!
-- Not sure yet if I even want to: But we could offer an interface `Errander` to offer implementations `Append(error, []error...)` so they can benefit from the merging of error slices into errand.
-- We could offer an interface to get the slices back with an `Errors() []error`
+- Not sure yet if I even want to: But we could offer an interface `Appends` to offer implementations `Append(error, []error...)` so they can benefit from the merging of error slices into errand.
 
 ## Motivation
 

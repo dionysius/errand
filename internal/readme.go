@@ -22,6 +22,13 @@ func main() {
 
 	// Output the error
 	fmt.Printf("%s\n", errs)
+
+	// Or we can also get the error slice using the Errors interface
+	if multi, is := errs.(errand.Errors); is {
+		for _, err := range multi.Errors() {
+			fmt.Println("->", err.Error())
+		}
+	}
 }
 
 func separate() error {
